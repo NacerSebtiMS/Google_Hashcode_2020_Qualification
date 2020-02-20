@@ -27,8 +27,8 @@ def compute_available_days():
         DR = LL[library_id][1]
         availability_day += DR
         if availability_day > D:
-            pass
-        else:    
+            continue
+        else:
             entry = (library_id,availability_day)
             available_libraries.append(entry)
     return available_libraries
