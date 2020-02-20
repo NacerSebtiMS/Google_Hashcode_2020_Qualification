@@ -39,10 +39,10 @@ def read_input(file):
     lines = text.split("\n")
     
     B,L,D = lines[0].split(" ")
-    BL = lines[1].split(" ")
+    BL = list( map(int, lines[1].split(" ")))
     LL= []
     for i in range(int(L)):
-        LL +=  [ lines[2*i+2].split(" ") + [lines[2*i+3].split(" ")] ]
+        LL +=  [ list(map(int,lines[2*i+2].split(" "))) + [ list(map(int,lines[2*i+3].split(" "))) ] ]
     return int(B),int(L),int(D), BL, LL
 
 B,L,D,BL,LL = read_input(FILE)
