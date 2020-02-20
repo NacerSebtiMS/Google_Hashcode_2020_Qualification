@@ -67,18 +67,33 @@ def library_total_book_score(library):
         total_library_book_score += BL[id]
     return total_library_book_score
 
+
 # Scores --> list of tuple (id lib, score)
 scores = []
 for i in range(len(LL)):
     scores += [( i, scorify_library(LL[i]) ) ]
 scores.sort(key=lambda tup: tup[1])
 
+def compute_available_days():
+    available_libraries = []
+    availability_day = 0
+    while len(scores)>0:
+        library_id_score = scores.pop()
+        library_id = library_id_score[0]
+        DR = LL[library_id][1]
+        availability_day += DR
+        entry = (library_id,availability_day)
+        available_libraries.append(entry)
+    return available_libraries
+
+AvL = compute_available_days()
+
 def available_libs(d):
     AvLD = []
     day = AvL[0][1]
     i = 0
     while day <= d:
-        AvLD += AvL[i]
+        AvLD += [AvL[i]]
         i+=1
         day = AvL[i][1]
     return AvLD
