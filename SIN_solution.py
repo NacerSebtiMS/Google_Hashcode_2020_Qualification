@@ -69,4 +69,5 @@ def library_total_book_score(library):
 scores = []
 for i in range(len(LL)):
     scores += [( i, scorify_library(LL[i]) ) ]
-scores.sort(key=lambda tup: tup[1],reverse=True)
+scores.sort(key=lambda tup: tup[1])
+
