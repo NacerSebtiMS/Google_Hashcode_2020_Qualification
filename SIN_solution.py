@@ -86,17 +86,48 @@ def compute_available_days():
         available_libraries.append(entry)
     return available_libraries
 
-AvL = compute_available_days()
+AvL = compute_available_days() # Availability of libraries following the scoring
 
 def available_libs(d):
     AvLD = []
     day = AvL[0][1]
     i = 0
-    while day <= d:
+    ln = len(AvL)
+    while i<ln and day <= d:
         AvLD += [AvL[i]]
-        i+=1
         day = AvL[i][1]
+        i+=1
     return AvLD
 
-#for i in range(D):
-    
+ScB = [] #Scanned books
+ScBpL = [] #Scanned books per lib
+LL2 = LL.copy()
+
+for d in range(D):
+    print("Day",d)
+    AvLD = available_libs(d)
+    for lib in AvLD:
+        id_lib = lib[0]
+        scan_rate = LL2[ id_lib ][2]
+        for book in LL2[id_lib][3]:
+            if scan_rate == 0:
+                continue
+            if book in ScB:
+                LL2[id_lib][3].remove(book)
+            else :
+                ScBpL += [ (book,id_lib) ]
+                ScB += [book]
+                scan_rate -= 1
+                
+nbr_libraries_for_sign_up = len(available_libs(D))
+libraries_submission = [ [] ]*nbr_libraries_for_sign_up
+
+
+library_dict = {}
+temp_lib = 0
+
+for book in ScBpL:
+    if book[1] not in library_dict.keys():    
+        library_dict[book[1]]=[]
+    library_dict[book[1]].append(book[0])
+
