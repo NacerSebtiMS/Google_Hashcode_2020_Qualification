@@ -16,16 +16,17 @@ PATH = "./"
 FILES = []
 for r, d, f in os.walk(PATH):
     for file in f:
-        if '.in' in file:
+        if '.txt' in file:
             FILES.append(os.path.join(file))
 
 ''' 
     Choose the files we'll work with
-        0 : './a_example.in'
-        1 : './b_small.in'
-        2 : './c_medium.in'
-        3 : './d_quite_big.in'
-        4 : './e_also_big.in'
+        1 - a_example.txt
+        2 - b_read_on.txt
+        3 - c_incunabula.txt
+        4 - d_tough_choices.txt
+        5 - e_so_many_books.txt
+        6 - f_libraries_of_the_world.txt
 '''
 for i in range(len(FILES)):
     print(i+1,"-",FILES[i])
@@ -37,9 +38,11 @@ def read_input(file):
     text = f.read()
     lines = text.split("\n")
     
-    M,P = lines[0].split(" ")
-    L = lines[1].split(" ")
-    for i in range(len(L)):
-        L[i] = int(L[i])
-    # M is max number of slices, P is number of different pizzas, L is a list of all pizza slice number
-    return int(M),int(P),L
+    B,L,D = lines[0].split(" ")
+    BL = lines[1].split(" ")
+    LL= []
+    for i in range(int(L)):
+        LL +=  [ lines[2*i+2].split(" ") + [lines[2*i+3].split(" ")] ]
+    return int(B),int(L),int(D), BL, LL
+
+B,L,D,BL,LL = read_input(FILE)
