@@ -82,8 +82,11 @@ def compute_available_days():
         library_id = library_id_score[0]
         DR = LL[library_id][1]
         availability_day += DR
-        entry = (library_id,availability_day)
-        available_libraries.append(entry)
+        if availability_day > D:
+            continue
+        else:
+            entry = (library_id,availability_day)
+            available_libraries.append(entry)
     return available_libraries
 
 AvL = compute_available_days() # Availability of libraries following the scoring
@@ -109,17 +112,20 @@ for d in range(D):
     for lib in AvLD:
         id_lib = lib[0]
         scan_rate = LL2[ id_lib ][2]
+        
         for book in LL2[id_lib][3]:
             if scan_rate == 0:
                 continue
+            """
             if book in ScB:
                 LL2[id_lib][3].remove(book)
-            else :
-                ScBpL += [ (book,id_lib) ]
-                ScB += [book]
-                scan_rate -= 1
+            else :"""
+            ScBpL += [ (book,id_lib) ]
+            ScB += [book]
+            scan_rate -= 1
                 
-nbr_libraries_for_sign_up = len(available_libs(D))
+LIBS = available_libs(D)
+nbr_libraries_for_sign_up = len(LIBS)
 libraries_submission = [ [] ]*nbr_libraries_for_sign_up
 
 
@@ -131,3 +137,19 @@ for book in ScBpL:
         library_dict[book[1]]=[]
     library_dict[book[1]].append(book[0])
 
+OUT = FILE[:-4] + "_solution.txt"
+
+f = open(OUT,"w+")
+f.write(str(nbr_libraries_for_sign_up))
+f.write("\n")
+for lib in LIBS:
+    BOOKS = library_dict[lib[0]]
+    f.write(str(lib[0]))
+    f.write(" ")
+    f.write(str(len(BOOKS)))
+    f.write("\n")
+    for b in BOOKS:
+        f.write(str(b))
+        f.write(" ")
+    f.write("\n")
+f.close()
