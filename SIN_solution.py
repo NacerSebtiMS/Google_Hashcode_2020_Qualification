@@ -16,7 +16,7 @@ PATH = "./"
 FILES = []
 for r, d, f in os.walk(PATH):
     for file in f:
-        if '.txt' in file:
+        if '.txt' in file and "solution" not in file:
             FILES.append(os.path.join(file))
 
 ''' 
@@ -107,7 +107,7 @@ ScBpL = [] #Scanned books per lib
 LL2 = LL.copy()
 
 for d in range(D):
-    print("Day",d)
+    print("Day %d/%d\t\t%.2f%%" % (d,D,d/D*100))
     AvLD = available_libs(d)
     for lib in AvLD:
         id_lib = lib[0]
@@ -116,13 +116,13 @@ for d in range(D):
         for book in LL2[id_lib][3]:
             if scan_rate == 0:
                 continue
-            """
+            
             if book in ScB:
                 LL2[id_lib][3].remove(book)
-            else :"""
-            ScBpL += [ (book,id_lib) ]
-            ScB += [book]
-            scan_rate -= 1
+            else :
+                ScBpL += [ (book,id_lib) ]
+                ScB += [book]
+                scan_rate -= 1
                 
 LIBS = available_libs(D)
 nbr_libraries_for_sign_up = len(LIBS)
@@ -137,7 +137,7 @@ for book in ScBpL:
         library_dict[book[1]]=[]
     library_dict[book[1]].append(book[0])
 
-OUT = FILE[:-4] + "_solution.txt"
+OUT = "Solutions/" + FILE[:-4] + "_solution.txt"
 
 f = open(OUT,"w+")
 f.write(str(nbr_libraries_for_sign_up))
