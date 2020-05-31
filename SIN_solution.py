@@ -47,6 +47,12 @@ def read_input(file):
 
 B,L,D,BL,LL = read_input(FILE)
 
+# Building a better BL list
+BS = [list(range(len(BL))),BL]
+BS = list(zip(*BS))
+BS.sort(key=lambda x: x[1])
+BS = list(zip(*BS))
+
 def scorify_library(library):
     """
     The aim is to give the libraries a score, that will enable to order them later on
@@ -97,6 +103,7 @@ def available_libs(d):
     i = 0
     ln = len(AvL)
     while i<ln and day <= d:
+        #if available_books( AvL[i][0] ) > 0:
         AvLD += [AvL[i]]
         day = AvL[i][1]
         i+=1
@@ -105,6 +112,9 @@ def available_libs(d):
 ScB = [] #Scanned books
 ScBpL = [] #Scanned books per lib
 LL2 = LL.copy()
+
+def available_books(n_lib):
+    return len(LL2[n_lib][3])
 
 for d in range(D):
     print("Day %d/%d\t\t%.2f%%" % (d,D,d/D*100))
